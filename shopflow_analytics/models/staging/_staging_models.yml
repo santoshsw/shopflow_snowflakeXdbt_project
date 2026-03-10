@@ -1,0 +1,76 @@
+version: 2
+
+sources:
+  - name: landing
+    database: ANALYTICS_DB
+    schema: LANDING
+    tables:
+
+      - name: raw_orders
+        description: "Raw orders table"
+        columns:
+          - name: order_id
+            description: "Unique order identifier"
+            tests: [unique, not_null]
+
+          - name: customer_id
+            description: "Foreign key to customer"
+            tests:
+              - not_null
+
+          - name: order_date
+            description: "Date the order was placed"
+            tests: [not_null]
+
+          - name: status
+            description: "Order status"
+            tests:
+              - accepted_values:
+                  values: ['delivered','shipped','processing','returned','cancelled']
+
+          - name: total_amount
+            description: "Total order amount"
+
+
+      - name: raw_order_items
+        description: "Order line items"
+        columns:
+          - name: order_item_id
+            description: "Unique order line identifier"
+            tests: [unique, not_null]
+
+          - name: order_id
+            description: "Foreign key to order"
+            tests: [not_null]
+
+          - name: product_id
+            description: "Foreign key to product"
+            tests: [not_null]
+
+          - name: quantity
+            description: "Quantity ordered"
+            tests: [not_null]
+
+          - name: unit_price
+            description: "Unit price at order time"
+
+
+      - name: raw_products
+        description: "Products master table"
+        columns:
+          - name: product_id
+            description: "Unique product identifier"
+            tests: [unique, not_null]
+
+          - name: product_name
+            description: "Product name"
+
+          - name: category
+            description: "Product category"
+
+          - name: price
+            description: "Current product price"
+
+
+      - name: raw_customers
+        description: "Customer master table"
