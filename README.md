@@ -1,1 +1,0 @@
-# shopflow_snowflakeXdbt_project
